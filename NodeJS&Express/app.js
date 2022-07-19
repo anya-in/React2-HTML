@@ -26,10 +26,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 //Body Parser Middleware
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+//Set public Folder
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Home Route
 app.get('/', (req, res) => {
@@ -80,7 +84,17 @@ app.post('/articles/add', (req, res) => {
     //submitting to db
     let article = new Article();
     article.title = req.body.title;
+    article.author = req.body.author;
+    article.body = req.body.body;
+    article.save(err => {
+        if (err) {
+            console.log(err);
+            return;
 
+        } else {
+            res.redirect('/');
+        }
+    });
 });
 
 //Start server
