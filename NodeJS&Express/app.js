@@ -5,8 +5,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
+const config = require('dotenv').config();
+const passport = require('passport');
+const connectDB = require('./config/database');
 
-mongoose.connect('mongodb://localhost/nodekb');
+mongoose.connect(config.database);
 let db = mongoose.connection;
 
 //check connection
@@ -72,23 +75,33 @@ app.use(expressValidator({
 }));
 
 
+
+
+// Passport Config
+require('./middleware/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('*', function (req, res, next) {
+    res.locals.user = req.user || null;
+    next();
+});
+
 // Routes ----------------------------------------------
-//Home Route
-app.get('/', (req, res) => {
-    Article.find({}, (err, articles) => {
+// Home Route
+app.get('/', function (req, res) {
+    Article.find({}, function (err, articles) {
         if (err) {
             console.log(err);
-        }
-        else {
+        } else {
             res.render('index', {
                 title: 'Articles',
                 articles: articles
             });
         }
-
     });
-
-})
+});
 
 //Route Files
 let articles = require('./routes/articles');
