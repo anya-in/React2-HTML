@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
-const config = require('dotenv').config();
+const config = require('./config/database');
 const passport = require('passport');
 const connectDB = require('./config/database');
 
@@ -78,7 +78,7 @@ app.use(expressValidator({
 
 
 // Passport Config
-require('./middleware/passport')(passport);
+require('./config/passport')(passport);
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());

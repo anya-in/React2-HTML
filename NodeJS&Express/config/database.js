@@ -1,14 +1,19 @@
-const mongoose = require('mongoose');
+module.exports = {
+    database: 'mongodb://localhost:27017/nodekb',
+    secret: 'yoursecret'
+}
 
-const connectDB = async () => {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true
-    });
+//const mongoose = require('mongoose');
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-};
+// const connectDB = async () => {
+//     const conn = await mongoose.connect(process.env.MONGODB_URI, {
+//         useNewUrlParser: true,
+//         useCreateIndex: true,
+//         useFindAndModify: false,
+//         useUnifiedTopology: true
+//     });
 
-module.exports = connectDB; 
+//     console.log(`MongoDB Connected: ${conn.connection.host}`);
+// };
+
+//module.exports = connectDB; 

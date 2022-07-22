@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
+
 //Bring in User Model
 const User = require('../models/user');
 
@@ -46,8 +47,11 @@ router.post('/register', async (req, res) => {
         res.redirect('/users/login');
     }
 });
+
+
+
 // Login Form
-router.get('/login', async (req, res) => {
+router.get('/login', function (req, res) {
     res.render('login');
 });
 
